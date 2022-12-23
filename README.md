@@ -1,2 +1,2 @@
 # oop_project
-discord competitor coming soon
+Day 1 Of project.
