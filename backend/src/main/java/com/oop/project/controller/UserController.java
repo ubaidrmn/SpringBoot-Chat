@@ -4,6 +4,7 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oop.project.service.UserService;
 
-@RestController
+@Controller
 @RequestMapping("users")
 public class UserController {
 
@@ -22,9 +23,8 @@ public class UserController {
         this.userService = userService;
     }
 
-	@GetMapping("/")
-	public String index(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-		model.addAttribute("name", name);
+	@RequestMapping(value="")
+	public String index() {
 		//this.userService.create("Ubaid", "rehmanubaid2003@gmail.com");
 		return "index";
 	}
@@ -32,8 +32,9 @@ public class UserController {
 	@MessageMapping("/hello")
 	@SendTo("/topic/greetings")
 	public Greeting greeting(HelloMessage message) throws Exception {
+	System.out.println(message.getName());
 	  Thread.sleep(1000); // simulated delay
-	  return new Greeting("Hello, ");
+	  return new Greeting("Hello How are you!!");
 	}
 
 }
