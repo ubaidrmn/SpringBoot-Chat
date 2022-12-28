@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oop.project.models.Chat;
+import com.oop.project.service.ChatService;
 import com.oop.project.service.UserService;
 
 @Controller
@@ -24,8 +26,7 @@ public class UserController {
     }
 
 	@RequestMapping(value="")
-	public String index() {
-		//this.userService.create("Ubaid", "rehmanubaid2003@gmail.com");
+	public String index() {	
 		return "index";
 	}
 	
