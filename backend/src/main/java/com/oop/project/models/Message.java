@@ -19,8 +19,8 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String sender, receiver, content;
-    
-    @ManyToOne()
+
+    @ManyToOne
     @JoinColumn(name="chat_id")
     private Chat chat;
 
