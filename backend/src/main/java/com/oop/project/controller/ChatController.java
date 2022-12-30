@@ -16,6 +16,7 @@ public class ChatController {
 
     @RequestMapping("get")
     public String get() {
+        this.chatService.addMessage(1, 1, "hahah");;
         return "";
     }
 

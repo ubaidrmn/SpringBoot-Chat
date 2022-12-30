@@ -25,6 +25,8 @@ public class Chat {
     private String name;
     //private List<User> members;
 
+    public Chat() {}
+    
     public Chat(String name) {
         this.name = name;
     }

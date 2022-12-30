@@ -14,7 +14,7 @@ import com.oop.project.models.Chat;
 import com.oop.project.service.ChatService;
 import com.oop.project.service.UserService;
 
-@Controller
+@RestController
 @RequestMapping("users")
 public class UserController {
 
@@ -28,6 +28,16 @@ public class UserController {
 	@RequestMapping(value="")
 	public String index() {	
 		return "index";
+	}
+
+	@RequestMapping(value="login")
+	public String login(@RequestParam String token) {
+		try {
+			this.userService.login(token);
+		} catch (Exception e) {
+			System.out.println("failed");
+		}
+		return "login";
 	}
 	
 	@MessageMapping("/hello")
