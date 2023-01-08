@@ -30,7 +30,7 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-    public void login(String token) throws Exception {
+    public Payload login(String token) throws Exception {
         String CLIENT_ID = "192136603544-5f21lpassjk3e09ci5o0if0d5csmnsvj.apps.googleusercontent.com";
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
         .setAudience(Collections.singletonList(CLIENT_ID))
@@ -54,6 +54,10 @@ public class UserService {
             System.out.println(email);
             System.out.println(name);
             System.out.println(pictureUrl);
+
+            return payload;
+        } else {
+            return null;
         }
     }
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.api.client.auth.openidconnect.IdToken.Payload;
 import com.oop.project.models.Chat;
 import com.oop.project.service.ChatService;
 import com.oop.project.service.UserService;
@@ -33,13 +34,15 @@ public class UserController {
 	@RequestMapping(value="login")
 	public String login(@RequestParam String token) {
 		try {
-			this.userService.login(token);
+			Payload payload = this.userService.login(token);
+			String name = (String) payload.get("name");
+			return name;
 		} catch (Exception e) {
 			System.out.println("failed");
+			return "failed";
 		}
-		return "login";
 	}
-	
+
 	@MessageMapping("/hello")
 	@SendTo("/topic/greetings")
 	public Greeting greeting(HelloMessage message) throws Exception {
