@@ -34,4 +34,9 @@ public class Message {
         this.content = content;
         this.sender = sender;
     }
+
+    public Message(String jwt, String content, int chatId) {
+        // decode jwt, verify token, check if user is a member of this chat ids chat
+        // if yes then store the message
+    }
 }

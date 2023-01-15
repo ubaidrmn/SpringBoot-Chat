@@ -22,12 +22,8 @@ public class Chat {
     private int id;
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
     private List<Message> messages;
-    private String name;
     //private List<User> members;
 
     public Chat() {}
     
-    public Chat(String name) {
-        this.name = name;
-    }
 }

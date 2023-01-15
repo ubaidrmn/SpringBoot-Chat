@@ -38,23 +38,20 @@ public class UserService {
         GoogleIdToken idToken = verifier.verify(token);
         if (idToken != null) {
             Payload payload = idToken.getPayload();
-
             String userId = payload.getSubject();
             System.out.println("User ID: " + userId);
-
-            // Get profile information from payload
             String email = payload.getEmail();
-            boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
             String name = (String) payload.get("name");
             String pictureUrl = (String) payload.get("picture");
-            String locale = (String) payload.get("locale");
-            String familyName = (String) payload.get("family_name");
-            String givenName = (String) payload.get("given_name");
-
+            String googleSubId = (String) payload.get("sub");
             System.out.println(email);
             System.out.println(name);
             System.out.println(pictureUrl);
-
+            try {
+                this.userRepository.findByGoogleSubId(googleSubId);
+            } catch (Exception e) {
+                this.create(name, email, googleSubId, pictureUrl);
+            }
             return payload;
         } else {
             return null;

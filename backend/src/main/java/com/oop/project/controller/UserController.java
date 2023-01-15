@@ -1,18 +1,16 @@
 package com.oop.project.controller;
 import org.springframework.ui.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.api.client.auth.openidconnect.IdToken.Payload;
-import com.oop.project.models.Chat;
-import com.oop.project.service.ChatService;
 import com.oop.project.service.UserService;
 
 @RestController
@@ -31,61 +29,25 @@ public class UserController {
 		return "index";
 	}
 
+	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value="login")
-	public String login(@RequestParam String token) {
+	public Map<String, String> login(@RequestParam String token) {
 		try {
 			Payload payload = this.userService.login(token);
 			String name = (String) payload.get("name");
-			return name;
+			String picture = (String) payload.get("picture");
+			String email = (String) payload.get("email");
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("email", email);
+			map.put("name", name);
+			map.put("picture", picture);
+			return map;
 		} catch (Exception e) {
-			System.out.println("failed");
-			return "failed";
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("status", "failed");
+			return map;
 		}
 	}
 
-	@MessageMapping("/hello")
-	@SendTo("/topic/greetings")
-	public Greeting greeting(HelloMessage message) throws Exception {
-	System.out.println(message.getName());
-	  Thread.sleep(1000); // simulated delay
-	  return new Greeting("Hello How are you!!");
-	}
-
 }
-
-class Greeting {
-
-	private String content;
-  
-	public Greeting() {
-	}
-  
-	public Greeting(String content) {
-	  this.content = content;
-	}
-  
-	public String getContent() {
-	  return content;
-	}
-  
-  }
-  
-class HelloMessage {
-
-	private String name;
-  
-	public HelloMessage() {
-	}
-  
-	public HelloMessage(String name) {
-	  this.name = name;
-	}
-  
-	public String getName() {
-	  return name;
-	}
-  
-	public void setName(String name) {
-	  this.name = name;
-	}
-  }
