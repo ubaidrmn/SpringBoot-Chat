@@ -4,7 +4,7 @@ const AuthenticationSlice = createSlice({
   name: 'auth',
   initialState: {
     loggedIn: false,
-    userdata: {
+    userData: {
       name: null,
       email: null,
       picture: null,
@@ -12,16 +12,16 @@ const AuthenticationSlice = createSlice({
   },
   reducers: {
     setUserData: (state, action) => {
-      state.userdata.name = action.payload.name;
-      state.userdata.email = action.payload.email;
-      state.userdata.picture = action.payload.picture;
+      state.userData.name = action.payload.name;
+      state.userData.email = action.payload.email;
+      state.userData.picture = action.payload.picture;
     },
     setLoggedIn: (state, action) => {
       state.loggedIn = true;
     },
     setLoggedOut: (state, action) => {
       state.loggedIn = false;
-      state.userdata = {name: null, email: null, picture: null}
+      state.userData = {name: null, email: null, picture: null}
     }
   }
 })

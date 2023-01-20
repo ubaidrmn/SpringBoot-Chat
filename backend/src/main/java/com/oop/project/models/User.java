@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -21,6 +22,9 @@ public class User {
 
     @OneToMany(mappedBy = "sender")
     private List<Message> messages;
+    
+    @ManyToMany(mappedBy = "members")
+    private List<Chat> chats;
     
     public User(String username, String email, String googleSubId, String profilePic) {
         this.username = username;

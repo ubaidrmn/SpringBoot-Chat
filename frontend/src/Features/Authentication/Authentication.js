@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { verifyUser } from "./AuthenticationThunks";
 import Logo from "../../Common/Logo";
 import { useEffect } from "react";
+import { Content } from "antd/es/layout/layout";
 
 const {Title} = Typography;
 
@@ -22,24 +23,23 @@ const Authentication = props => {
 
     return (
         <>
-            <Title style={{margin:"0px", marginRight:"20px", marginTop:"5px"}} level={2}>Chat App</Title>
-            <Logo />
-            <Divider />
+            <Content style={{
+                padding: '0 50px',
+            }}>
+                <center>
+                <br/><br/>
+                <Title style={{margin:"0px", marginRight:"20px", marginTop:"5px"}} level={1}>Sign in with your google account</Title>
+                <Divider />
                 <GoogleOAuthProvider 
-                    clientId="192136603544-5f21lpassjk3e09ci5o0if0d5csmnsvj.apps.googleusercontent.com" >
-                    <GoogleLogin
-                        buttonText="Login"
-                        onSuccess={responseGoogle}
-                        onFailure={responseGoogle}
-                    />
+                        clientId="192136603544-5f21lpassjk3e09ci5o0if0d5csmnsvj.apps.googleusercontent.com" >
+                        <GoogleLogin
+                            buttonText="Login"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                        />
                 </GoogleOAuthProvider>
-            <h1>
-            {auth.userdata.name}
-            </h1>
-            <h1>
-            {auth.userdata.email}
-            </h1>
-            <img src={auth.userdata.picture}></img>
+                </center>
+            </Content>
         </>
     )   
 }

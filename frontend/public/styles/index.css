@@ -5,4 +5,69 @@ html, body, #root {
     max-height: 100%;
     padding: 0px;
     margin: 0px;
+    font-family: 'Inter', sans-serif;
+}
+
+a {
+    color: inherit;
+}
+
+.all-content {
+    max-width: 100%;
+    width: 100%;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.header {
+    max-width: 100%;
+    width: 100%;
+    background-color: black;
+    color: white;
+}
+
+.header-child {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.header-child-child-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    max-width: 100%;
+    width: 100%;
+}
+
+.header-child-child-2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    max-width: 100%;
+    width: 100%;
+}
+
+.header p {
+    margin: 0px;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.header-profile-pic {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 100%;
+}
+
+.header-child-child-2 p {
+    margin-left: 0px;
+    margin-right: 20px;
 }

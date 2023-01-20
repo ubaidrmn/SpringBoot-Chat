@@ -8,6 +8,9 @@ import com.oop.project.repository.UserRepository;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Collections;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -30,12 +33,17 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-    public Payload login(String token) throws Exception {
+    public GoogleIdToken verify(String token) throws GeneralSecurityException, IOException {
         String CLIENT_ID = "192136603544-5f21lpassjk3e09ci5o0if0d5csmnsvj.apps.googleusercontent.com";
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
         .setAudience(Collections.singletonList(CLIENT_ID))
         .build();
         GoogleIdToken idToken = verifier.verify(token);
+        return idToken;
+    }
+
+    public Payload login(String token) throws Exception {
+        GoogleIdToken idToken = this.verify(token);
         if (idToken != null) {
             Payload payload = idToken.getPayload();
             String userId = payload.getSubject();

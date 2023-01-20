@@ -1,42 +1,29 @@
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 const { Header, Content, Footer } = Layout;
 
 export default function AppHeader(props) {
   const navigate = useNavigate();
+  const auth = useSelector(state=>state.auth);
 
     return (
         <>
-    <Layout>
-      <Header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
-          width: '100%',
-        }}
-      >
-        <div
-          style={{
-            float: 'left',
-            width: 120,
-            height: 31,
-            margin: '16px 24px 16px 0',
-            background: 'rgba(255, 255, 255, 0.2)',
-          }}
-        />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={[{onClick: () => {
-            navigate("/settings");
-          },label:"Settings", key:1}, {onClick: () => {
-            navigate("/inbox");
-          }, label:"Inbox", key:2}]}
-        />
-      </Header>  
-    </Layout>
+          <div className='header'>
+            <div className='all-content'>
+              <div className='header-child'>
+                <div className='header-child-child-1'>
+                  <Link to="/inbox"><p>Inbox</p></Link>
+                  <Link to="/settings"><p>Settings</p></Link>
+                </div>
+                <div className='header-child-child-2'>
+                  {auth.loggedIn ? <Link to="/settings"><p>{auth.userData.name}</p></Link> : <Link to="/auth"><p>Login</p></Link>}                
+                  <img className='header-profile-pic' src={auth.loggedIn ? auth.userData.picture : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUW0u5Eiiy3oM6wcpeEE6sXCzlh8G-tX1_Iw&usqp=CAU"}></img>
+                
+                </div>
+              </div>
+            </div>
+          </div>
         </>
     )
 }
