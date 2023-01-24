@@ -14,7 +14,7 @@
 	<name>project</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>18</java.version>
     	<start-class>com.oop.project.Application</start-class>
 	</properties>
 	<dependencies>
