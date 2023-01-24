@@ -4,6 +4,7 @@ const AuthenticationSlice = createSlice({
   name: 'auth',
   initialState: {
     loggedIn: false,
+    jwt: null,
     userData: {
       name: null,
       email: null,
@@ -22,10 +23,13 @@ const AuthenticationSlice = createSlice({
     setLoggedOut: (state, action) => {
       state.loggedIn = false;
       state.userData = {name: null, email: null, picture: null}
+    },
+    setJwt: (state, action) => {
+      state.jwt = action.payload.jwt;
     }
   }
 })
 
-export const { setUserData, setLoggedIn, setLoggedOut } = AuthenticationSlice.actions
+export const { setUserData, setLoggedIn, setLoggedOut, setJwt } = AuthenticationSlice.actions
 
 export default AuthenticationSlice.reducer

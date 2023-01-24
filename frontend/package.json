@@ -8,6 +8,7 @@
     "antd": "^5.1.2",
     "net": "^1.0.2",
     "react": "^16.14.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^16.14.0",
     "react-google-login": "^5.2.2",
     "react-redux": "^8.0.5",

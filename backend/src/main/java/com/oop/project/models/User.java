@@ -3,6 +3,7 @@ package com.oop.project.models;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,8 +24,14 @@ public class User {
     @OneToMany(mappedBy = "sender")
     private List<Message> messages;
     
-    @ManyToMany(mappedBy = "members")
+    @ManyToMany(mappedBy = "members", fetch = FetchType.EAGER)
     private List<Chat> chats;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<User> friends;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<User> requests;
     
     public User(String username, String email, String googleSubId, String profilePic) {
         this.username = username;
@@ -32,4 +39,6 @@ public class User {
         this.googleSubId = googleSubId;
         this.profilePic = profilePic;
     }
+
+    public User() {}
 }

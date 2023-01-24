@@ -1,20 +1,31 @@
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { useSelector } from 'react-redux';
+import { Breadcrumb, Layout, Menu, theme, Spin } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { setLoggedOut } from '../Features/Authentication/AuthenticationSlice';
+import { LoadingOutlined } from '@ant-design/icons';
+import Loader from './Loader';
+
 const { Header, Content, Footer } = Layout;
 
 export default function AppHeader(props) {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const auth = useSelector(state=>state.auth);
+  const app = useSelector(state=>state.app);
 
     return (
         <>
+        <Loader />
           <div className='header'>
             <div className='all-content'>
               <div className='header-child'>
                 <div className='header-child-child-1'>
+                  <Link to="/friends"><p>Friends</p></Link>
                   <Link to="/inbox"><p>Inbox</p></Link>
-                  <Link to="/settings"><p>Settings</p></Link>
+                  { auth.loggedIn ?
+                    <Link onClick={()=>{
+                      dispatch(setLoggedOut());
+                    }}><p>Logout</p></Link> : null
+                  }
                 </div>
                 <div className='header-child-child-2'>
                   {auth.loggedIn ? <Link to="/settings"><p>{auth.userData.name}</p></Link> : <Link to="/auth"><p>Login</p></Link>}                

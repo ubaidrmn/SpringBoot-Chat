@@ -35,4 +35,6 @@ public class Message {
         this.sender = sender;
     }
 
+    public Message() {}
+
 }

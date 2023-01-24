@@ -1,34 +1,50 @@
 import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
-import { useSelector } from 'react-redux';
+import { Button, Spin, message, App } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoadingEndMessage } from '../App/AppSlice';
 
-const antIcon = (
-  <LoadingOutlined
-    style={{
-      fontSize: 70,
-      color: "white"
-    }}
-    spin
-  />
-);
+export default function Loader() {
 
-export default function Loader(props) {
+    const app = useSelector(state=>state.app);
+    const dispatch = useDispatch();
+    const [messageApi, contextHolder] = message.useMessage();
+    const [lastMessage, setLastMessage] = useState(null);
 
-    const appState = useSelector(state=>state.app);
+    const info = (message) => {
+      messageApi.open({
+        type: 'info',
+        content: message,
+        duration: 3,
+      });
+    };
 
-    return appState.isLoading ? 
-        <div style={{
-            height: "100%", 
-            width: "100%", 
-            position: "fixed",
-            backgroundColor: "rgba(0,0,0,0.7)",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            top: "0px",
-            zIndex: "999"
-        }}>
-            <Spin indicator={antIcon} />
+    useEffect(()=>{
+      if (app.loadingEndMessage !== null && app.loadingEndMessage != lastMessage) {
+        info(app.loadingEndMessage);
+        dispatch(setLoadingEndMessage({loadingEndMessage: null}))
+        setLastMessage(app.loadingEndMessage);
+      }
+    }, [app.loadingEndMessage])
+
+    return <>
+    {contextHolder}
+    {app.isLoading ? 
+      <div style={{
+        position: "fixed",
+        top: "0px",
+        height: "100%",
+        zIndex: "999",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        maxWidth: "100%",
+        width: "100%",
+        backgroundColor: "rgba(0,0,0,0.8)"
+      }}>
+        <div style={{maxWidth: "100%", width: "100%", display: "flex", flexDirection: "row", justifyContent: "center"}}>
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 50, color: "white" }} spin />} />
         </div>
-        : null
+      </div>
+    : null}</>
 }

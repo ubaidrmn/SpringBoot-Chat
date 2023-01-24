@@ -6,15 +6,23 @@ import { verifyUser } from "./AuthenticationThunks";
 import Logo from "../../Common/Logo";
 import { useEffect } from "react";
 import { Content } from "antd/es/layout/layout";
+import { setJwt } from "./AuthenticationSlice";
+import {useCookies} from "react-cookie";
 
 const {Title} = Typography;
 
 const Authentication = props => {
     const dispatch = useDispatch();
     const auth = useSelector(state=>state.auth);
+
+    const [cookies, setCookie, removeCookie] = useCookies(['auth-token']);
     
     const responseGoogle = (response) => {
         dispatch(verifyUser(response.credential));
+        dispatch(setJwt({jwt:response.credential}));
+        setCookie("auth-token", response.credential, {
+            path: "/"
+        });
     }
 
     useEffect(()=>{

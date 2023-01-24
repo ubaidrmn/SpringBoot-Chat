@@ -27,14 +27,16 @@ public class ChatService {
     @Autowired
     private UserRepository userRepository;
 
+    public Optional<Chat> get(int id) {
+        return this.chatRepository.findById(id);
+    }
+
     public void create(List<String> memberEmails) {
         List<User> members = new ArrayList<User>();
         for (int i=0;i<memberEmails.size();i++) {
-            try {
-                User user = this.userRepository.findByEmail(memberEmails.get(i));
+            User user = this.userRepository.findByEmail(memberEmails.get(i));
+            if (user != null) {
                 members.add(user);
-            } catch (Exception e) {
-                System.out.println(e);
             }
         }
         Chat chat = new Chat(new ArrayList<>(), members);
