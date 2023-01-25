@@ -41,6 +41,7 @@ export default function AuthenticationWrapper(props) {
                     dispatch(setLoadingEndMessage({loadingEndMessage: data.text}))
                     if (data.text.search("You have a new friend request") !== -1 || data.text.search("accepted your friend request")) {
                         dispatch(getFriendList(auth.jwt))
+                        dispatch(getChats(auth.userData.email));
                     }
                 })
             })

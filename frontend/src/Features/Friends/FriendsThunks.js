@@ -14,7 +14,7 @@ export function getFriendList(jwt) {
             dispatch(setLoading({loading: false}));
         })
     }
-  }
+}
 
   
 export function sendFriendRequest(jwt, email) {

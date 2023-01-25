@@ -54,7 +54,8 @@ public class ChatController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,path="/create")
-	public HashMap<String, String> create(@RequestBody Map<String, List<String>> payload) {
+	public HashMap<String, String> create(@RequestParam String token, @RequestBody Map<String, List<String>> payload) throws Exception {
+		this.userService.login(token);
 		this.chatService.create(payload.get("emails"));
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("status", "success");
