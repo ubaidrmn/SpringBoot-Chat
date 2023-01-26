@@ -40,7 +40,7 @@ public class ChatController {
 	
     @Autowired
     private ChatService chatService;
-
+	
 	@RequestMapping(method=RequestMethod.GET, path="/get")
 	public List<ChatDto> get(@RequestParam String  email) {
 		System.out.println(email);
