@@ -1,38 +1,21 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import SockJS from "sockjs-client";
-import Stomp from 'stompjs';
-import AuthenticationWrapper from "../Authentication/AuthenticationWrapper";
+import AuthenticationWrapper, { stompClient } from "../Authentication/AuthenticationWrapper";
 import { addMessage } from "./InboxSlice";
 import { getChats } from "./InboxThunks";
 
 export default function Chat(props) {
-
     const params = useParams();
     
-    const socket = new SockJS("http://127.0.0.1:8080/ws/connect")
-    const stompClient = new Stomp.over(socket);
     const auth = useSelector(state=>state.auth)
     const inbox = useSelector(state=>state.inbox);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        
-        stompClient.connect({}, frame => {
-            stompClient.subscribe("/chat"+auth.userData.email, message => {
-                const data = JSON.parse(message.body);
-                dispatch(addMessage({id: params.id, message: {
-                    content: data.content,
-                    sender: data.sender,
-                    senderEmail: data.senderEmail,
-                    senderPicture: data.senderPicture
-                }}))
-                document.getElementById("chatbox").scrollTo(0, document.getElementById("chatbox").scrollHeight)
-            })
-        })
-
-    },[])
+    const sendMessage = ()=> {
+        stompClient.send("/app/send", {}, JSON.stringify({jwt: auth.jwt,content:document.getElementById("message").value, chatId: params.id, senderEmail: auth.userData.email}))
+        document.getElementById("message").value = ""
+    }
 
     return (
         <>
@@ -50,7 +33,11 @@ export default function Chat(props) {
                             let i = 0;
                             return chat.messages.map(message=> {
                                 i+=1;
-                                return <div className="chat-message" key={i}>
+                                console.log(message)
+                                return <div style={{
+                                    backgroundColor: message.senderEmail == auth.userData.email ? "#140F26" : "#F2F5F9",
+                                    color: message.senderEmail == auth.userData.email ? "white" : "#140F26",
+                                }} className="chat-message" key={i}>
                                     <div className="chat-message-image">
                                         <img src={message.senderPicture}></img>
                                     </div>
@@ -66,10 +53,13 @@ export default function Chat(props) {
                 </div>
 
                 <div className="chat-box-input">
-                    <input id="message" placeholder="Type something..."></input>
-                    <button onClick={()=> {
-                        stompClient.send("/app/send", {}, JSON.stringify({jwt: auth.jwt,content:document.getElementById("message").value, chatId: params.id, senderEmail: auth.userData.email}))
-                    }}>send</button>
+                    <input onKeyDown={e=>{
+                        console.log(e.key)
+                        if (e.key == "Enter") {
+                            sendMessage();
+                        }
+                    }} id="message" placeholder="Type something..."></input>
+                    <button onClick={sendMessage}>send</button>
                 </div>
             </div>
         </>

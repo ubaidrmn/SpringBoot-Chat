@@ -34,13 +34,13 @@ export default function Loader() {
         position: "fixed",
         top: "0px",
         height: "100%",
-        zIndex: "999",
+        zIndex: "99999",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         maxWidth: "100%",
         width: "100%",
-        backgroundColor: "rgba(0,0,0,0.8)"
+        backgroundColor: "rgba(0,0,0,0.9)"
       }}>
         <div style={{maxWidth: "100%", width: "100%", display: "flex", flexDirection: "row", justifyContent: "center"}}>
         <Spin indicator={<LoadingOutlined style={{ fontSize: 50, color: "white" }} spin />} />

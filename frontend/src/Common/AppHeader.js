@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { setLoggedOut } from '../Features/Authentication/AuthenticationSlice';
 import { LoadingOutlined } from '@ant-design/icons';
 import Loader from './Loader';
+import { useCookies } from 'react-cookie';
 
 const { Header, Content, Footer } = Layout;
 
@@ -11,8 +12,9 @@ export default function AppHeader(props) {
   const dispatch = useDispatch();
   const auth = useSelector(state=>state.auth);
   const app = useSelector(state=>state.app);
+  const [cookies, setCookie, removeCookie] = useCookies(['auth-token']);
 
-    return (
+  return (
         <>
         <Loader />
           <div className='header'>
@@ -24,6 +26,7 @@ export default function AppHeader(props) {
                   { auth.loggedIn ?
                     <Link onClick={()=>{
                       dispatch(setLoggedOut());
+                      removeCookie("auth-token")
                     }}><p>Logout</p></Link> : null
                   }
                 </div>
