@@ -58,7 +58,7 @@ const Authentication = props => {
                         height: "auto"
                     }}></img>
                     <br/><br/>
-                    <h1 style={{margin: "0px"}}>Get Started With Chat.</h1>
+                    <h1 style={{margin: "0px"}}>Get Started With ChatHub.</h1>
                     <br/>
                     <div style={{}} id="login-btn-google"><GoogleLogin onSuccess={responseGoogle}></GoogleLogin></div>
                     <div style={{
