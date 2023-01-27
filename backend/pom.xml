@@ -17,6 +17,15 @@
 		<java.version>18</java.version>
     	<start-class>com.oop.project.Application</start-class>
 	</properties>
+
+	<repositories>
+		<repository>
+		<id>talend-repo</id>
+		<name>Talend Repo</name>
+		<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
+		</repository>
+  </repositories>
+
 	<dependencies>
 
 		<dependency>
@@ -94,6 +103,14 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.33.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.talend.daikon/crypto-utils -->
+		<dependency>
+			<groupId>org.talend.daikon</groupId>
+			<artifactId>crypto-utils</artifactId>
+			<version>7.0.13</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

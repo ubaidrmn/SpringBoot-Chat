@@ -4,7 +4,8 @@ const InboxSlice = createSlice({
   name: 'auth',
   initialState: {
     chats: [],
-    chatsInitialized: false
+    chatsInitialized: false,
+    publicKey: false
   },
   reducers: {
     setChats: (state, action) => {
@@ -20,10 +21,13 @@ const InboxSlice = createSlice({
         }
       })
       state.chats = newChats;
+    },
+    setPublicKey: (state, action) => {
+      state.publicKey = action.payload.publicKey;
     }
   }
 })
 
-export const { setChats, addMessage } = InboxSlice.actions
+export const { setChats, addMessage, setPublicKey } = InboxSlice.actions
 
 export default InboxSlice.reducer

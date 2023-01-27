@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import {useDispatch, useSelector} from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { getFriendList } from "../Friends/FriendsThunks";
-import { getChats } from "../Inbox/InboxThunks";
+import { getChats, getPublicKey } from "../Inbox/InboxThunks";
 import { setJwt } from "./AuthenticationSlice";
 import { verifyUser } from "./AuthenticationThunks";
 import { setLoadingEndMessage } from "../../App/AppSlice";
@@ -38,7 +38,7 @@ export default function AuthenticationWrapper(props) {
         if (auth.loggedIn) {
             dispatch(getChats(auth.userData.email));
             dispatch(getFriendList(auth.jwt));
-
+            dispatch(getPublicKey())
             stompClient.connect({}, frame => {
                 stompClient.subscribe("/chatnotify"+auth.userData.email, message => {
                     console.log(message)

@@ -1,6 +1,10 @@
 package com.oop.project.controller;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +37,8 @@ import com.oop.project.service.UserService;
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
 public class ChatController {
 
+	String privateKey, publicKey;
+
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 	@Autowired
@@ -40,6 +46,27 @@ public class ChatController {
 	
     @Autowired
     private ChatService chatService;
+
+	@RequestMapping(method=RequestMethod.GET, path="/get-public-key")
+	public String getPublicKey() throws NoSuchAlgorithmException {
+		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+        keyGen.initialize(512);
+        byte[] publicKey1 = keyGen.genKeyPair().getPublic().getEncoded();
+        StringBuffer retString = new StringBuffer();
+        for (int i = 0; i < publicKey1.length; ++i) {
+            retString.append(Integer.toHexString(0x0100 + (publicKey1[i] & 0x00FF)).substring(1));
+        }
+		byte[] privatekey = keyGen.genKeyPair().getPrivate().getEncoded();
+        StringBuffer reString1 = new StringBuffer();
+        for (int i = 0; i < privatekey.length; ++i) {
+            retString.append(Integer.toHexString(0x0100 + (privatekey[i] & 0x00FF)).substring(1));
+        }
+		if (this.privateKey == null & this.publicKey == null) {
+			this.privateKey = reString1.toString();
+			this.publicKey = retString.toString();
+		}
+		return this.publicKey;
+	}
 
 	@RequestMapping(method=RequestMethod.GET, path="/get")
 	public List<ChatDto> get(@RequestParam String  email) {

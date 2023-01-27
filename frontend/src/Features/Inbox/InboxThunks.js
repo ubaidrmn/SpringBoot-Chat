@@ -1,5 +1,5 @@
 import { setLoading } from "../../App/AppSlice";
-import { setChats } from "./InboxSlice"
+import { setChats, setPublicKey } from "./InboxSlice"
 
 export function getChats(email) {
     return (dispatch, getState) => {
@@ -30,6 +30,19 @@ export function createChat(token, email, emails) {
     .then(data=>{
       dispatch(getChats(email));
       dispatch(setLoading({loading:false}))
+    })
+  }
+}
+
+export function getPublicKey() {
+  return (dispatch, getState) => {
+    dispatch(setLoading({loading:true}))
+    fetch(process.env.REACT_APP_API_URL + "chat/get-public-key", {
+        method: "GET",
+    })
+    .then(res=>res.text())
+    .then(data=>{
+      dispatch(setPublicKey(data));
     })
   }
 }
