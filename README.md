@@ -1,4 +1,4 @@
-# Chat Application OOP Project
+# Spring Boot Chat
 
 This is a simple chat application built with Spring Boot & React.js for OOP semester project at my university.
 
