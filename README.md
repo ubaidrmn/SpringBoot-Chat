@@ -1,14 +1,20 @@
 # Chat Application OOP Project
 
-This is a simple chat application built in Spring Boot & React.js. It uses stomp over websockets for text communication & MySQL for data persistence. 
+This is a simple chat application built with Spring Boot & React.js for OOP semester project at my university.
 
-## run dev server using docker:
+## Features
+
+- Authentication via Google API
+- Real-time messaging using STOMP over WebSockets
+- Chat history stored in MySQL
+
+## Start development server using docker:
 
 ```
 docker compose up
 ```
 
-## sample screenshots
+## Screenshots
 
 ![chat application](https://github.com/ubaidrmn/oop_project/blob/main/frontend/public/screenshot1.png)
 ![chat application](https://github.com/ubaidrmn/oop_project/blob/main/frontend/public/screenshot3.png)
